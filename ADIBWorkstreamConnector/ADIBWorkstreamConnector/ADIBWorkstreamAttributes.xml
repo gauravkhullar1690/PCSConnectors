@@ -16,50 +16,50 @@
             <parentAttr id="" />
           </dependencies>
         </attr>
+		<attr id="FirstName" kind="text">
+          <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>First Name</label>
+          <helpText>Enter the First Name</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+		<attr id="LastName" kind="text">
+          <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Last Name</label>
+          <helpText>Enter the Last Name</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+		<attr id="Email" kind="text">
+          <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Email</label>
+          <helpText>Enter the Email</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
 		<attr id="AccessDetails" kind="multivalue">
           <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
           <behavior override="yes" copy="no" ignore="yes" />
           <label>Access Details</label>
           <helpText>Access Details</helpText>
-          <defaultValue encryptMethod="none" />
-          <constraints type="maxlength">
-            <maxlength>999</maxlength>
-          </constraints>
-          <dependencies>
-            <parentAttr id="" />
-          </dependencies>
-        </attr>
-        <attr id="Password" kind="text">
-          <properties required="yes" secure="yes" verify="yes" visible="yes" readonly="no" global="no" />
-          <behavior override="yes" copy="no" ignore="yes" />
-          <label>Password</label>
-          <helpText>Password</helpText>
-          <defaultValue encryptMethod="none" />
-          <constraints type="maxlength">
-            <maxlength>999</maxlength>
-          </constraints>
-          <dependencies>
-            <parentAttr id="" />
-          </dependencies>
-        </attr>
-		<attr id="ConfirmPassword" kind="text">
-          <properties required="yes" secure="yes" verify="yes" visible="yes" readonly="no" global="no" />
-          <behavior override="yes" copy="no" ignore="yes" />
-          <label>Confirm Password</label>
-          <helpText>Confirm Password</helpText>
-          <defaultValue encryptMethod="none" />
-          <constraints type="maxlength">
-            <maxlength>999</maxlength>
-          </constraints>
-          <dependencies>
-            <parentAttr id="" />
-          </dependencies>
-        </attr>
-        <attr id="ValidTo" kind="text">
-          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
-          <behavior override="yes" copy="no" ignore="yes" />
-          <label>Account Valid Until</label>
-          <helpText>Account Valid Until</helpText>
           <defaultValue encryptMethod="none" />
           <constraints type="maxlength">
             <maxlength>999</maxlength>

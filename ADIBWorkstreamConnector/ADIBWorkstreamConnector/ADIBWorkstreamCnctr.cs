@@ -472,7 +472,7 @@ namespace ADIBWorkstreamConnector
             StrList accessDtls = new StrList();
             try
             {
-                string query = "select t.firstName,t.lastName,t.activate,t.privy,r.domain_name,r.name from t_user t, t_role r where t.name = '"+userId+"' and r.name in (select r.name from t_user_role ur,t_role r where ur.user_id = (select id from t_user where name = '"+userId+"'))";
+                string query = "select domain_name,name from t_role where id in (select ur.role_id from t_user t join t_user_role ur on t.id = ur.user_id where t.name = '"+userId+"')";
                 SqlConnection conn = makeConnection(this.m_sHost, this.m_sPort, this.m_sDatabaseName, this.m_sDBUserName, this.m_sDBPassword, "ADIBWorkstreamCnctr_ValidateTargetConfig");
                 List<List<object>> results = getResultsFromSqlDb(conn, query);
                 Log("INFO", "Access details query :: " + query);
@@ -510,7 +510,7 @@ namespace ADIBWorkstreamConnector
             StrList grpList = new StrList();
             try
             {
-                string query = "select r.name from t_user t, t_role r where t.name = '"+userId+"' and r.name in (select r.name from t_user_role ur,t_role r where ur.user_id = (select id from t_user where name = '"+userId+"'))";
+                string query = "select name from t_role where id in (select ur.role_id from t_user t join t_user_role ur on t.id = ur.user_id where t.name = '"+userId+"')";
                 SqlConnection conn = makeConnection(this.m_sHost, this.m_sPort, this.m_sDatabaseName, this.m_sDBUserName, this.m_sDBPassword, "getUserGroupsList");
                 List<List<object>> results = getResultsFromSqlDb(conn, query);
                 Log("INFO", "Groups details query :: " + query);

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CourRoot version="1">
+  <RDKAttributes version="1">
+    <definitions>
+      <attributes>
+        <attr id="UserId" kind="text">
+          <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>UserId</label>
+          <helpText>UserId</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>        
+        <attr id="AccessDetails" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Access Details</label>
+          <helpText>Access Details</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Groups" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Group</label>
+          <helpText>Group</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+      </attributes>
+      <objects>
+        <object id="Account" standardBehavior="include_all_attrs" />
+      </objects>
+    </definitions>
+    <interface_exposure>
+      <interface id="accountChange" name="Account Change" supported="yes" standardBehavior="include_all_objects">
+        <objects>
+          <object id="Account" inherit="yes">
+            <remove_attr id="UserId" />
+          </object>
+        </objects>
+      </interface>
+      <interface id="accountCreate" name="Account Create" supported="yes" standardBehavior="include_all_objects"/>
+      <interface id="accountEnable" name="Account Enable" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountDisable" name="Account Disable" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountDelete" name="Account Delete" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountInfo" name="Account Info" supported="yes" standardBehavior="include_all_objects" />
+    </interface_exposure>
+    <target_exposure>
+      <target standardBehavior="exclude_all_objects">
+        <objects>
+          <object id="Target Parameters">
+            <attr id="Host" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Server</label>
+              <helpText>Server/Host where the Database is hosted</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="Port" kind="number">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Port</label>
+              <helpText>Port numnber. Generally 1521 is used</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>            
+            <attr id="DBPassword" kind="text">
+              <properties required="yes" secure="yes" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>DB Password</label>
+              <helpText>The database user's password.</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>            
+            <attr id="DBUsername" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>DB User</label>
+              <helpText>The user to connect to the database</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="DatabaseName" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Database Name</label>
+              <helpText>Database name</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+          </object>
+        </objects>
+      </target>
+    </target_exposure>
+  </RDKAttributes>
+  <RDKApplication version="1" protocol_version="2.1">
+    <sync_id />
+    <connector_name>ADIB-AMS-Cnctr</connector_name>
+    <connector_version>1.0</connector_version>
+    <application_name>ADIB-AMS</application_name>
+  </RDKApplication>
+</CourRoot>

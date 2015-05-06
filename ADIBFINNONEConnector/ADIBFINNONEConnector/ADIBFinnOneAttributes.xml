@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CourRoot version="1">
+  <RDKAttributes version="1">
+    <definitions>
+      <attributes>
+        <attr id="UserId" kind="text">
+          <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>UserId</label>
+          <helpText>UserId</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Password" kind="text">
+          <properties required="yes" secure="yes" verify="yes" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Password</label>
+          <helpText>Password</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Username" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Username</label>
+          <helpText>FirstName + LastName</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Email" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Email</label>
+          <helpText>Email</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Department" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Department</label>
+          <helpText>Department</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="BranchProduct" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Product</label>
+          <helpText>Product</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="Branch" />
+          </dependencies>
+        </attr>
+        <attr id="ApplicationGroup" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>ApplicationGroup</label>
+          <helpText>ApplicationGroup</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Group" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Group</label>
+          <helpText>Group</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Role" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Role</label>
+          <helpText>Role</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Status" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Status</label>
+          <helpText>Status</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Remarks" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Remarks</label>
+          <helpText>Remarks</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="INIT_FLAG" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>INIT_FLAG</label>
+          <helpText>INIT_FLAG</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="LOCK_STATUS" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>LOCK_STATUS</label>
+          <helpText>LOCK_STATUS</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="EXPIRY_DATE" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>EXPIRY_DATE</label>
+          <helpText>EXPIRY_DATE</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="MAKERID" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>MAKERID</label>
+          <helpText>MAKERID</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="EMPLOYEE_CODE" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>EMPLOYEE_CODE</label>
+          <helpText>EMPLOYEE_CODE</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="SENT_TO_LMS" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>SENT_TO_LMS</label>
+          <helpText>SENT_TO_LMS</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="SENT_TO_COLS" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>SENT_TO_COLS</label>
+          <helpText>SENT_TO_COLS</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="EOD_ACCESS" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>EOD_ACCESS</label>
+          <helpText>EOD_ACCESS</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+      </attributes>
+      <objects>
+        <object id="Account" standardBehavior="include_all_attrs" />
+      </objects>
+    </definitions>
+    <interface_exposure>
+      <interface id="accountChange" name="Account Change" supported="yes" standardBehavior="include_all_objects">
+        <objects>
+          <object id="Account" inherit="yes">
+            <remove_attr id="UserId" />
+          </object>
+        </objects>
+      </interface>
+      <interface id="accountCreate" name="Account Create" supported="yes" standardBehavior="include_all_objects"/>
+      <interface id="accountEnable" name="Account Enable" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountDisable" name="Account Disable" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountDelete" name="Account Delete" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountInfo" name="Account Info" supported="yes" standardBehavior="include_all_objects" />
+    </interface_exposure>
+    <target_exposure>
+      <target standardBehavior="exclude_all_objects">
+        <objects>
+          <object id="Target Parameters">
+            <attr id="Host" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Server</label>
+              <helpText>Server/Host where the Database is hosted</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="Port" kind="number">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Port</label>
+              <helpText>Port numnber. Generally 1521 is used</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>            
+            <attr id="DBPassword" kind="text">
+              <properties required="yes" secure="yes" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>DB Password</label>
+              <helpText>The database user's password.</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>            
+            <attr id="DBUsername" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>DB User</label>
+              <helpText>The user to connect to the database</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="ServiceName" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Service Name</label>
+              <helpText>Service name</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+          </object>
+        </objects>
+      </target>
+    </target_exposure>
+  </RDKAttributes>
+  <RDKApplication version="1" protocol_version="2.1">
+    <sync_id />
+    <connector_name>ADIB-FinnOne-Cnctr</connector_name>
+    <connector_version>1.0</connector_version>
+    <application_name>ADIB-FinnOne</application_name>
+  </RDKApplication>
+</CourRoot>

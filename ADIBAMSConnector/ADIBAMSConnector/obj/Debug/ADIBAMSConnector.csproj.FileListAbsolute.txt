@@ -1,0 +1,5 @@
+C:\Users\GKHULLAR\Documents\Visual Studio 2010\Projects\ADIBAMSConnector\ADIBAMSConnector\bin\Debug\ADIBAMSConnector.dll
+C:\Users\GKHULLAR\Documents\Visual Studio 2010\Projects\ADIBAMSConnector\ADIBAMSConnector\bin\Debug\ADIBAMSConnector.pdb
+C:\Users\GKHULLAR\Documents\Visual Studio 2010\Projects\ADIBAMSConnector\ADIBAMSConnector\obj\Debug\ADIBAMSConnector.csprojResolveAssemblyReference.cache
+C:\Users\GKHULLAR\Documents\Visual Studio 2010\Projects\ADIBAMSConnector\ADIBAMSConnector\obj\Debug\ADIBAMSConnector.dll
+C:\Users\GKHULLAR\Documents\Visual Studio 2010\Projects\ADIBAMSConnector\ADIBAMSConnector\obj\Debug\ADIBAMSConnector.pdb

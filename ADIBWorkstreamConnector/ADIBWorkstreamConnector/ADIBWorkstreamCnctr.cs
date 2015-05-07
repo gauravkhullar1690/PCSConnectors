@@ -15,7 +15,7 @@
 // BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
 // THIS SOFTWARE OR ITS DERIVATIVES.
 // Author: ROHIT PANT
-// Date: 30 April 2015
+// Date: 07 May 2015
 // Version 1.0
 ///////////////////////////////////////////////////////////////// 
 
@@ -265,7 +265,7 @@ namespace ADIBWorkstreamConnector
         // This method opens the connection with Oracle database
         private SqlConnection makeConnection(String host, String port, String databaseName, String username, String password, String methodName)
         {
-            Log("DEBUG", "Trying to establish connection to the CSF database for method " + methodName);
+            Log("DEBUG", "Trying to establish connection to the Workstream database for method " + methodName);
             Log("DEBUG", "retryCount = " + iRetryCount + " connect timout= " + iConnectionTimeout);
             //Log("DEBUG", "Parameters host : " + host + " port : "+port + " serviceName : "+serviceName + " username : "+username +" password : "+password);  
             this.connection = new SqlConnection();
@@ -276,11 +276,11 @@ namespace ADIBWorkstreamConnector
                 connection.ConnectionString = connString;
 
                 connection.Open();
-                Log("INFO", "Successfully connected to the CSF database for method " + methodName);
+                Log("INFO", "Successfully connected to the Workstream database for method " + methodName);
             }
             catch (Exception e)
             {
-                Log("ERROR", "Error while connecting to CSF database for method " + methodName + " :: " + e.Message);
+                Log("ERROR", "Error while connecting to Workstream database for method " + methodName + " :: " + e.Message);
                 throw e;
             }
             return this.connection;
@@ -297,7 +297,7 @@ namespace ADIBWorkstreamConnector
             }
             catch (Exception e)
             {
-                Log("ERROR", "Error while connecting to CSF database :: " + e.Message);
+                Log("ERROR", "Error while connecting to Workstream database :: " + e.Message);
                 throw e;
             }
 
@@ -564,7 +564,7 @@ namespace ADIBWorkstreamConnector
                 Log("INFO", "=============== Out ADIBWorkstreamCnctr_ValidateTargetConfig ===============");
                 respond_validateTargetConfiguration(resObj, this.bErr, this.sErrMsg);
             }
-        } // ADIBCSFCnctr_ValidateTargetConfig
+        } // ADIBWorkstreamCnctr_ValidateTargetConfig
 
         public void ADIBWorkstreamCnctr_EnableUser(RequestObject reqObj, ResponseObject resObj, string methodType)
         {
@@ -731,7 +731,7 @@ namespace ADIBWorkstreamConnector
                 try
                 {
                     SqlConnection conn = makeConnection(this.m_sHost, this.m_sPort, this.m_sDatabaseName, this.m_sDBUserName, this.m_sDBPassword, "ADIBWorkstreamCnctr_AcctCreate");
-                    Log("Request received to create AMS User : " + reqObj.m_accountName);
+                    Log("Request received to create Workstream User : " + reqObj.m_accountName);
                     initializeAttributes(reqObj, "ADIBWorkstreamCnctr_AcctCreate");
                     if (!userExist(reqObj))
                     {
@@ -776,15 +776,88 @@ namespace ADIBWorkstreamConnector
                 }
 
             }
-        } // ADIBAMSCnctr_AcctCreate
+        } // ADIBWorkstreamCnctr_AcctCreate
+
+
+        public void ADIBWorkstreamCnctr_AcctChange(RequestObject reqObj, ResponseObject resObj, string methodType)
+        {
+            if ((methodType == COUR_METHOD_TYPE_PREPROCESS) || (methodType == COUR_METHOD_TYPE_POSTPROCESS))
+            {
+                // Respond with not supported
+                respond_statusNotSupported(resObj);
+            }
+            else
+            {
+                try
+                {
+                    string sResult = string.Empty;
+                    string sUnlockOnly = string.Empty;
+                    if (reqObj.m_object == "Password Reset")
+                    {
+                        respond_statusNotSupported(resObj);
+                    }
+                    else // Perform change action
+                    {
+                        Log("DEBUG", "=============== In ADIBWorkstreamCnctr_AcctChange ===============");
+                        setupConfig(reqObj);
+                        Log("DEBUG", "Request XML from CCM: " + reqObj); // TODO: Should never be added.
+                        try
+                        {
+                            SqlConnection conn = makeConnection(this.m_sHost, this.m_sPort, this.m_sDatabaseName, this.m_sDBUserName, this.m_sDBPassword, "ADIBWorkstreamCnctr_AcctChange");
+                            Log("Request received to create Workstream User : " + reqObj.m_accountName);
+                            initializeAttributes(reqObj, "ADIBWorkstreamCnctr_AcctChange");
+                            string query = "delete from t_user_role where user_id = (select id from t_user where name = '"+this.m_sUsername+"')";
+                            setResultsToSqlDb(conn, query);
+                            Log("DEBUG", "Proceeding to change user access in Workstream connector");
+                            string userid = getIdFromTable(this.m_sUsername, "t_user"), roleid;
+                            String[] groups = this.m_sAccountClosureGps.Split(multiValueSeprator);
+                            if (groups.Length == 0)
+                            {
+                                groups = new String[] { this.m_sAccountClosureGps };
+                            }
+                            foreach (String group in groups)
+                            {
+                                roleid = getIdFromTable(group, "t_role");
+                                query = "insert into t_user_role values(" + userid + "," + roleid + ")";
+                                setResultsToSqlDb(conn, query);
+                            }
+                            Log("DEBUG", "User Access Successfully changed!!");
+                        }
+                        catch (Exception ex)
+                        {
+                            SetExceptionMessage(ex);
+                        }
+                        finally
+                        {
+                            Log("DEBUG", "=============== Out ADIBWorkstreamCnctr_AcctChange ===============");
+                            closeConnection("ADIBWorkstreamCnctr_AcctChange");
+                            respond_acctChange(resObj, reqObj.m_accountName, this.bErr, this.sErrMsg);
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SetExceptionMessage(ex);
+                    Log("INFO", "Modifying account details failed.");
+                }
+                finally
+                {
+                    Log("DEBUG", "=============== Out ADIBWorkstreamCnctr_AcctChange ===============");
+                    closeConnection("ADIBWorkstreamCnctr_AcctChange");
+                    respond_acctChange(resObj, this.m_sUsername, this.bErr, this.sErrMsg);
+                }
+            }
+        } // ADIBWorkstreamCnctr_AcctChange
 
         public override void AssignSupportedScriptFunctions()
         {
             base.RedirectInterface(COUR_INTERFACE_VALIDATE_TARGET_CONFIG, ADIBWorkstreamCnctr_ValidateTargetConfig, false, true, false);
             base.RedirectInterface(COUR_INTERFACE_ACCT_INFO, ADIBWorkstreamCnctr_AcctInfo, false, true, false);
+            base.RedirectInterface(COUR_INTERFACE_ACCT_CREATE, ADIBWorkstreamCnctr_AcctCreate, false, true, false);
+            base.RedirectInterface(COUR_INTERFACE_ACCT_CHANGE, ADIBWorkstreamCnctr_AcctChange, false, true, false);
             base.RedirectInterface(COUR_INTERFACE_ACCT_ENABLE, ADIBWorkstreamCnctr_EnableUser, true, true, false);
             base.RedirectInterface(COUR_INTERFACE_ACCT_DISABLE, ADIBWorkstreamCnctr_DisableUser, true, true, false);
-            base.RedirectInterface(COUR_INTERFACE_ACCT_CREATE, ADIBWorkstreamCnctr_AcctCreate, false, true, false);
         }
     }
 }

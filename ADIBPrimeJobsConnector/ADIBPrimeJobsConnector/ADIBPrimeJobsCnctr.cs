@@ -581,42 +581,7 @@ namespace ADIBPrimeJobsConnector
                     Log("List of Roles : " + listofRoles);
 
                     //SELECT count(*) from dba_users where username = '"&strUserId&"'"
-                    OracleCommand selectQuery = new OracleCommand("SELECT count(*) from dba_users where username = '" + this.m_sUsername + "'", this.connection);
-                    OracleDataReader reader = selectQuery.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        if (Int16.Parse(reader["count(*)"].ToString()) > 0)
-                        {
-                            Log("User already exists in PrimeJobs.");
-                        }
-                        else
-                        {
-                            Log("User " + this.m_sUsername + " Doesn't exists Creating.");
-                            executeCommand("CREATE USER \"" + this.m_sUsername + "\" IDENTIFIED BY \"" + this.m_sPassword + "\"", null, "ADIBPrimeJobsCnctr_AcctCreate");
-                            Log("User " + this.m_sUsername + "Created.");
-                        }
-                    }
-
-                    String[] arrayofRoles = listofRoles.Split(',');
-                    foreach (String role in arrayofRoles)
-                    {
-                        if (role.ToUpper().IndexOf("EODROLE") > 0)
-                        {
-                            executeCommand("grant PRIME_EOD to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctCreate");
-                            executeCommand("grant PRIME_EOD_ROLE to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctCreate");
-                        }
-                        Log("Assigning Role " + role + " to User " + this.m_sUsername);
-                        executeCommand("grant " + role + " to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctCreate");
-                        Log("Assigned Role " + role + " to User " + this.m_sUsername);
-                    }
-
-                    executeCommand("grant connect to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctCreate");
-                    executeCommand("grant Prime_select to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctCreate");
-                    executeCommand("grant prime_jobs to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctCreate");
-
-                    Log("Creating User " + this.m_sUsername);
-                    executeCommand("Insert into primeusers( institution_id, serno, username, usertype, schemaname, logaction) Values (0, s_primeusers.nextval, '" + this.m_sUsername + "', 'U','ADIB','Create')", null, "ADIBPrimeJobsCnctr_AcctCreate");
-                    Log("Created User " + this.m_sUsername);
+                    createUserPrimeJobs(listofRoles, this.m_sUsername);
 
                 }
                 catch (Exception e)
@@ -633,6 +598,49 @@ namespace ADIBPrimeJobsConnector
             }
         } // ADIBPrimeJobsCnctr_AcctCreate
 
+        public void createUserPrimeJobs(String listofRoles, String userName)
+        {
+            OracleCommand selectQuery = new OracleCommand("SELECT count(*) from dba_users where username = '" + userName + "'", this.connection);
+            OracleDataReader reader = selectQuery.ExecuteReader();
+            while (reader.Read())
+            {
+                if (Int16.Parse(reader["count(*)"].ToString()) > 0)
+                {
+                    Log("User already exists in PrimeJobs.");
+                }
+                else
+                {
+                    Log("User " + userName + " Doesn't exists Creating.");
+                    executeCommand("CREATE USER \"" + userName + "\" IDENTIFIED BY \"" + this.m_sPassword + "\"", null, "ADIBPrimeJobsCnctr_AcctCreate");
+                    Log("User " + userName + "Created.");
+                }
+            }
+
+            String[] arrayofRoles = listofRoles.Split(',');
+            foreach (String role in arrayofRoles)
+            {
+                if (role.ToUpper().IndexOf("EODROLE") > 0)
+                {
+                    executeCommand("grant PRIME_EOD to " + userName, null, "ADIBPrimeJobsCnctr_AcctCreate");
+                    executeCommand("grant PRIME_EOD_ROLE to " + userName, null, "ADIBPrimeJobsCnctr_AcctCreate");
+                }
+                Log("Assigning Role " + role + " to User " + userName);
+                executeCommand("grant " + role + " to " + userName, null, "ADIBPrimeJobsCnctr_AcctCreate");
+                Log("Assigned Role " + role + " to User " + userName);
+            }
+
+            executeCommand("grant connect to " + userName, null, "ADIBPrimeJobsCnctr_AcctCreate");
+            Log("CONNECT Role Assigned to " + userName + ".");
+            executeCommand("grant Prime_select to " + userName, null, "ADIBPrimeJobsCnctr_AcctCreate");
+            Log("PRIME_SELECT Role Assigned " + userName + ".");
+            executeCommand("grant prime_jobs to " + userName, null, "ADIBPrimeJobsCnctr_AcctCreate");
+            Log("PRIME_JOBS Role Assigned " + userName + ".");
+
+            Log("Creating User " + userName);
+            executeCommand("Insert into primeusers( institution_id, serno, username, usertype, schemaname, logaction) Values (0, s_primeusers.nextval, '" + userName + "', 'U','ADIB','Create')", null, "ADIBPrimeJobsCnctr_AcctCreate");
+            Log("Created User " + userName);
+        }
+
         public void ADIBPrimeJobsCnctr_AcctChange(RequestObject reqObj, ResponseObject resObj, string methodType)
         {
             if ((methodType == COUR_METHOD_TYPE_PREPROCESS) || (methodType == COUR_METHOD_TYPE_POSTPROCESS))
@@ -642,6 +650,9 @@ namespace ADIBPrimeJobsConnector
             }
             else
             {
+                bool create = false;
+                String username = "";
+                String rolesList = "";
                 try
                 {
                     string sResult = string.Empty;
@@ -738,65 +749,311 @@ namespace ADIBPrimeJobsConnector
                             Log("Request received to modify PrimeJobs User : " + reqObj.m_accountName);
                             initializeAttributes(reqObj, "ADIBPrimeJobsCnctr_AcctChange");
 
-                            OracleCommand selectCmd_priv = new OracleCommand("select granted_role from dba_role_privs where grantee = '" + this.m_sUsername + "'", this.connection);
-                            OracleDataReader reader_priv = null;
+                            Log("Roles for Central : " + this.prmjobsCentral);
+                            Log("Roles for Egypt : " + this.prmjobsEgypt);
+                            Log("Roles for UAE : " + this.prmjobsUAE);
+                            String listofRoles = "";
+                            String preFix = "";
 
-                            reader_priv = selectCmd_priv.ExecuteReader();
+                            String ProfileUserID = this.m_sUsername.Substring(1, this.m_sUsername.Length - 1);
+                            Log("Profile User ID : " + ProfileUserID);
 
-                            while (reader_priv.Read())
+                            String cUserID = "C" + ProfileUserID;
+                            String eUserID = "E" + ProfileUserID;
+                            String uUserID = "U" + ProfileUserID;
+
+                            bool cUserExists = userExists(cUserID);
+                            bool eUserExists = userExists(eUserID);
+                            bool uUserExists = userExists(uUserID);
+
+                            String[] cRolesAssigned = null;
+                            String[] eRolesAssigned = null;
+                            String[] uRolesAssigned = null;
+
+                            if (cUserExists)
                             {
-                                Log("Privilidge " + reader_priv["granted_role"].ToString() + " assigned to User " + this.m_sUsername + ". Revoking.");
-
-                                executeCommand("revoke " + reader_priv["granted_role"].ToString() + " from " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctDelete");
-
-                                Log("Privilidge " + reader_priv["granted_role"].ToString() + "Revoked.");
+                                cRolesAssigned = rolesAssigned(cUserID);
+                            }
+                            if (eUserExists)
+                            {
+                                eRolesAssigned = rolesAssigned(eUserID);
+                            }
+                            if (uUserExists)
+                            {
+                                uRolesAssigned = rolesAssigned(uUserID);
                             }
 
-                            String accountName = this.m_sUsername;
-                            String rolesToAssign = "";
+                            String[] cNewRolesList = null;
+                            String[] eNewRolesList = null;
+                            String[] uNewRolesList = null;
 
-                            if (accountName.Substring(0, 1).ToUpper() == "U")
+
+                            if (this.prmjobsCentral != "")
                             {
-                                rolesToAssign = this.prmjobsUAE;
+                                cNewRolesList = this.prmjobsCentral.ToString().Split(',');
                             }
-                            else if (accountName.Substring(0, 1).ToUpper() == "C")
+                            if (this.prmjobsEgypt != "")
                             {
-                                rolesToAssign = this.prmjobsCentral;
+                                eNewRolesList = this.prmjobsEgypt.ToString().Split(',');
                             }
-                            else if (accountName.Substring(0, 1).ToUpper() == "E")
+                            if (this.prmjobsUAE != "")
                             {
-                                rolesToAssign = this.prmjobsEgypt;
+                                uNewRolesList = this.prmjobsUAE.ToString().Split(',');
                             }
 
-                            Log("Roles To Assign : " + rolesToAssign);
+                            bool[] UsersCreate = { false, false, false }; //0 for Central, 1 for Egypt , 2 for UAE
+                            bool[] UsersChange = { false, false, false }; //0 for Central, 1 for Egypt , 2 for UAE
 
-                            String[] arrayofRoles = rolesToAssign.Split(',');
-                            foreach (String role in arrayofRoles)
+                            try
                             {
-                                if (role.ToUpper().IndexOf("EODROLE") > 0)
+                                Log("Central New Roles List : " + cNewRolesList.Length);
+                                if (cNewRolesList.Length > 0)
                                 {
-                                    executeCommand("grant PRIME_EOD to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctChange");
-                                    executeCommand("grant PRIME_EOD_ROLE to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                    try
+                                    {
+                                        Log("Central Already Assigned Roles Length : " + cRolesAssigned.Length);
+                                        if (cRolesAssigned.Length == 0)
+                                        {
+                                            UsersCreate[0] = true;
+                                        }
+                                        else
+                                        {
+                                            UsersChange[0] = userChangePossibility(cRolesAssigned, cNewRolesList, cUserID);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        UsersCreate[0] = true;
+                                        UsersChange[0] = false;
+                                    }
                                 }
-                                Log("Assigning Role " + role + " to User " + this.m_sUsername);
-                                executeCommand("grant " + role + " to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctChange");
-                                Log("Assigned Role " + role + " to User " + this.m_sUsername);
+                            }
+                            catch (Exception e)
+                            {
+                                Log("NO New Roles for Central Location.");
                             }
 
-                            executeCommand("grant connect to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctChange");
-                            executeCommand("grant Prime_select to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctChange");
-                            executeCommand("grant prime_jobs to " + this.m_sUsername, null, "ADIBPrimeJobsCnctr_AcctChange");
+                            try
+                            {
+                                Log("Egypt New Roles List : " + eNewRolesList.Length);
+                                if (eNewRolesList.Length > 0)
+                                {
+                                    try
+                                    {
+                                        Log("Egypt Already Assigned Roles Length : " + eRolesAssigned.Length);
+                                        if (eRolesAssigned.Length == 0)
+                                        {
+                                            UsersCreate[1] = true;
+                                        }
+                                        else
+                                        {
+                                            UsersChange[1] = userChangePossibility(eRolesAssigned, eNewRolesList, uUserID);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        UsersCreate[1] = true;
+                                        UsersChange[1] = false;
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Log("NO New Roles for Egypt Location.");
+                            }
 
+                            try
+                            {
+                                Log("UAE New Roles List : " + uNewRolesList.Length);
+                                if (uNewRolesList.Length > 0)
+                                {
+                                    try
+                                    {
+                                        Log("UAE Already Assigned Roles Length : " + uRolesAssigned.Length);
+                                        if (uRolesAssigned.Length == 0)
+                                        {
+                                            UsersCreate[2] = true;
+                                        }
+                                        else
+                                        {
+                                            UsersChange[2] = userChangePossibility(uRolesAssigned, uNewRolesList, eUserID);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        UsersCreate[2] = true;
+                                        UsersChange[2] = false;
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Log("NO New Roles for UAE Location.");
+                            }
+
+                            Log("User Change Array : " + UsersChange);
+                            Log("User Create Array : " + UsersCreate);
+
+                            int trueChangePos = Array.IndexOf(UsersChange, true);
+                            int trueCreatePos = Array.IndexOf(UsersCreate, true);
+
+                            if (trueChangePos > -1)
+                            {
+                                create = false;
+                                if (trueChangePos == 0)
+                                {
+                                    preFix = "C";
+                                    listofRoles = this.prmjobsCentral;
+                                    rolesList = this.prmjobsCentral;
+                                }
+                                else if (trueChangePos == 1)
+                                {
+                                    preFix = "E";
+                                    listofRoles = this.prmjobsEgypt;
+                                    rolesList = this.prmjobsEgypt;
+                                }
+                                else if (trueChangePos == 2)
+                                {
+                                    preFix = "U";
+                                    listofRoles = this.prmjobsUAE;
+                                    rolesList = this.prmjobsUAE;
+                                }
+                            }
+
+                            if (trueCreatePos > -1)
+                            {
+                                create = true;
+                                if (trueCreatePos == 0)
+                                {
+                                    preFix = "C";
+                                    listofRoles = this.prmjobsCentral;
+                                    rolesList = this.prmjobsCentral;
+                                }
+                                else if (trueCreatePos == 1)
+                                {
+                                    preFix = "E";
+                                    listofRoles = this.prmjobsEgypt;
+                                    rolesList = this.prmjobsEgypt;
+                                }
+                                else if (trueCreatePos == 2)
+                                {
+                                    preFix = "U";
+                                    listofRoles = this.prmjobsUAE;
+                                    rolesList = this.prmjobsUAE;
+                                }
+                            }
+
+
+                            String PrimeJobsUserID = preFix + ProfileUserID;
+                            Log("PrimeJobs User ID : " + PrimeJobsUserID);
+                            username = PrimeJobsUserID;
+
+                            /*OracleCommand selectCmd_UserPrimeJobs = new OracleCommand("select USERNAME from primeusers where USERNAME = '" + PrimeJobsUserID + "'", this.connection);
+                            OracleDataReader reader_UserPrimeJobs = null;
+
+                            reader_UserPrimeJobs = selectCmd_UserPrimeJobs.ExecuteReader();
+
+                            Log("User Exists in PrimeJobs : " + reader_UserPrimeJobs.HasRows);
+
+                            if (reader_UserPrimeJobs.HasRows == false*/
+                            if (create == true)
+                            {
+                                try
+                                {
+                                    username = PrimeJobsUserID;
+                                    create = true;
+                                    this.m_sPassword = reqObj.GetParameter("Password");
+                                    Log("Password : " + this.m_sPassword);
+                                    createUserPrimeJobs(listofRoles, PrimeJobsUserID);
+                                }
+                                catch (Exception ex)
+                                {
+                                    SetExceptionMessage(ex);
+                                }
+                                finally
+                                {
+                                    Log("DEBUG", "=============== Out ADIBPrimeJobsCnctr_AcctChange ===============");
+                                    closeConnection("ADIBPrimeJobsCnctr_AcctChange");
+                                    respond_acctCreate(resObj, PrimeJobsUserID, this.bErr, this.sErrMsg);
+                                }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    OracleCommand selectCmd_priv = new OracleCommand("select granted_role from dba_role_privs where grantee = '" + username + "'", this.connection);
+                                    OracleDataReader reader_priv = null;
+
+                                    reader_priv = selectCmd_priv.ExecuteReader();
+
+                                    while (reader_priv.Read())
+                                    {
+                                        Log("Privilidge " + reader_priv["granted_role"].ToString() + " assigned to User " + username + ". Revoking.");
+
+                                        executeCommand("revoke " + reader_priv["granted_role"].ToString() + " from " + username, null, "ADIBPrimeJobsCnctr_AcctDelete");
+
+                                        Log("Privilidge " + reader_priv["granted_role"].ToString() + "Revoked.");
+                                    }
+
+                                    //String accountName = this.m_sUsername;
+                                    String accountName = username;
+                                    String rolesToAssign = "";
+                                    rolesToAssign = rolesList;
+                                    /*
+                                    if (accountName.Substring(0, 1).ToUpper() == "U")
+                                    {
+                                        rolesToAssign = this.prmjobsUAE;
+                                    }
+                                    else if (accountName.Substring(0, 1).ToUpper() == "C")
+                                    {
+                                        rolesToAssign = this.prmjobsCentral;
+                                    }
+                                    else if (accountName.Substring(0, 1).ToUpper() == "E")
+                                    {
+                                        rolesToAssign = this.prmjobsEgypt;
+                                    }
+                                    */
+                                    Log("Roles To Assign : " + rolesToAssign);
+
+                                    String[] arrayofRoles = rolesToAssign.Split(',');
+                                    foreach (String role in arrayofRoles)
+                                    {
+                                        if (role.ToUpper().IndexOf("EODROLE") > 0)
+                                        {
+                                            executeCommand("grant PRIME_EOD to " + username, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                            executeCommand("grant PRIME_EOD_ROLE to " + username, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                        }
+                                        Log("Assigning Role " + role + " to User " + username);
+                                        executeCommand("grant " + role + " to " + username, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                        Log("Assigned Role " + role + " to User " + username);
+                                    }
+
+                                    executeCommand("grant connect to " + username, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                    Log("Assigned Role connect to User " + username);
+                                    executeCommand("grant Prime_select to " + username, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                    Log("Assigned Role Prime_select to User " + username);
+                                    executeCommand("grant prime_jobs to " + username, null, "ADIBPrimeJobsCnctr_AcctChange");
+                                    Log("Assigned Role prime_jobs to User " + username);
+                                }
+                                catch (Exception ex)
+                                {
+                                    SetExceptionMessage(ex);
+                                }
+                                finally
+                                {
+                                    Log("DEBUG", "=============== Out ADIBPrimeJobsCnctr_AcctChange ===============");
+                                    closeConnection("ADIBPrimeJobsCnctr_AcctChange");
+                                    respond_acctChange(resObj, username, this.bErr, this.sErrMsg);
+                                }
+                            }
                         }
                         catch (Exception ex)
                         {
-                            SetExceptionMessage(ex);
+
                         }
                         finally
                         {
-                            Log("DEBUG", "=============== Out ADIBPrimeJobsCnctr_AcctChange ===============");
-                            closeConnection("ADIBPrimeJobsCnctr_AcctChange");
-                            respond_acctChange(resObj, this.m_sUsername, this.bErr, this.sErrMsg);
+
                         }
 
                     }
@@ -836,16 +1093,74 @@ namespace ADIBPrimeJobsConnector
                             Log("DEBUG", "=============== Out ADIBPrimeJobsCnctr_AcctReset ===============");
                             closeConnection("ADIBPrimeJobsCnctr_AcctReset");
                         }
+                        respond_acctChange(resObj, this.m_sUsername, this.bErr, this.sErrMsg);
+                    }
+                    else if (create == true)
+                    {
+                        Log("DEBUG", "=============== Out ADIBPrimeJobsCnctr_AcctChange ===============");
+                        closeConnection("ADIBPrimeJobsCnctr_AcctChange");
+                        respond_acctCreate(resObj, username, this.bErr, this.sErrMsg);
                     }
                     else
                     {
                         Log("DEBUG", "=============== Out ADIBPrimeJobsCnctr_AcctChange ===============");
                         closeConnection("ADIBPrimeJobsCnctr_AcctChange");
+                        respond_acctChange(resObj, username, this.bErr, this.sErrMsg);
                     }
-                    respond_acctChange(resObj, this.m_sUsername, this.bErr, this.sErrMsg);
+
                 }
             }
         } // ADIBPrimeJobsCnctr_AcctChange
+
+        public bool userChangePossibility(String[] ExistingRolesList, String[] NewRolesList, String userID)
+        {
+            foreach (String str in NewRolesList)
+            {
+                Log("Index Of : " + Array.IndexOf(ExistingRolesList, str));
+                if (Array.IndexOf(ExistingRolesList, str) == -1)
+                {
+                    Log("Change Possibility for " + userID + " : true.");
+                    return true;
+                }
+            }
+
+            Log("Change Possibility for " + userID + " : false.");
+            return false;
+        }
+
+        public bool userExists(String userID)
+        {
+            OracleCommand selectCmd_UserPrimeJobs = new OracleCommand("select USERNAME from primeusers where USERNAME = '" + userID + "'", this.connection);
+            OracleDataReader reader_UserPrimeJobs = null;
+
+            reader_UserPrimeJobs = selectCmd_UserPrimeJobs.ExecuteReader();
+
+            Log("User Exists in PrimeJobs with UserID " + userID + " : " + reader_UserPrimeJobs.HasRows);
+
+            if (reader_UserPrimeJobs.HasRows == false)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public String[] rolesAssigned(String sUserId)
+        {
+            OracleCommand selectCmd_priv = new OracleCommand("select granted_role from dba_role_privs where grantee = '" + sUserId + "'", this.connection);
+            OracleDataReader reader_priv = null;
+
+            reader_priv = selectCmd_priv.ExecuteReader();
+            List<String> rolesList = new List<String>();
+
+            while (reader_priv.Read())
+            {
+                rolesList.Add(reader_priv["granted_role"].ToString());
+            }
+
+            Log("Roles already assigned to User " + sUserId + " are : " + rolesList.ToArray());
+
+            return rolesList.ToArray();
+        }
 
         public void ADIBPrimeJobsCnctr_AcctEnable(RequestObject reqObj, ResponseObject resObj, string methodType)
         {

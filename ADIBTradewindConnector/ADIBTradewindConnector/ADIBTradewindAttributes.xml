@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CourRoot version="1">
+  <RDKAttributes version="1">
+    <definitions>
+      <attributes>
+        <attr id="UserName" kind="text">
+          <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>User Id</label>
+          <helpText>Enter the User Id</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="UserRole" kind="radio">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>User Role</label>
+          <helpText>User Role</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="FirstName" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>First Name</label>
+          <helpText>First Name</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="LastName" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Last Name</label>
+          <helpText>Last Name</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="OperatorId" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Operator ID</label>
+          <helpText>Operator ID</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="OperatorName" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Operator Name</label>
+          <helpText>Operator Name</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="OperatorInitials" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Operator Initials</label>
+          <helpText>Operator Initials</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="LoginId" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Login ID</label>
+          <helpText>Login ID</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="DBUser" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>DB User</label>
+          <helpText>DB User</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="ForcePassChange" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Force Password Change</label>
+          <helpText>Force Password Change</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="OperatorSuspend" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Operator Suspend</label>
+          <helpText>Operator Suspend</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="ExpirationDate" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Expiration Date</label>
+          <helpText>Expiration Date</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="SuspenseClearDate" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Suspense Clear Date</label>
+          <helpText>Suspense Clear Date</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="DefintBranchId" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Defint Branch Id</label>
+          <helpText>Defint Branch Id</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="Transrestrict" kind="text">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Transrestrict</label>
+          <helpText>Transrestrict</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="SecurityLevel" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Security Level</label>
+          <helpText>Security Level</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+        <attr id="ProductName" kind="multivalue">
+          <properties required="no" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+          <behavior override="yes" copy="no" ignore="yes" />
+          <label>Product Name</label>
+          <helpText>Product Name</helpText>
+          <defaultValue encryptMethod="none" />
+          <constraints type="maxlength">
+            <maxlength>999</maxlength>
+          </constraints>
+          <dependencies>
+            <parentAttr id="" />
+          </dependencies>
+        </attr>
+      </attributes>
+      <objects>
+        <object id="Account" standardBehavior="include_all_attrs" />
+      </objects>
+    </definitions>
+    <interface_exposure>
+      <interface id="accountChange" name="Account Change" supported="yes" standardBehavior="include_all_objects">
+        <objects>
+          <object id="Account" inherit="yes">
+            <remove_attr id="UserName" />
+          </object>
+        </objects>
+      </interface>
+      <interface id="accountCreate" name="Account Create" supported="yes" standardBehavior="include_all_objects"/>
+      <interface id="accountEnable" name="Account Enable" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountDisable" name="Account Disable" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountDelete" name="Account Delete" supported="yes" standardBehavior="exclude_all_objects"/>
+      <interface id="accountInfo" name="Account Info" supported="yes" standardBehavior="include_all_objects" />
+    </interface_exposure>
+    <target_exposure>
+      <target standardBehavior="exclude_all_objects">
+        <objects>
+          <object id="Target Parameters">
+            <attr id="Host" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Server</label>
+              <helpText>Server/Host where the Database is hosted</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="Port" kind="number">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Port</label>
+              <helpText>Port number</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="DBPassword" kind="text">
+              <properties required="yes" secure="yes" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>DB Password</label>
+              <helpText>The database user's password.</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="DBUsername" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>DB User</label>
+              <helpText>The user to connect to the database</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="ADIBTFDatabaseName" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>ADIBTF Database Name</label>
+              <helpText>Database name for ADIBTF</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="ATMDatabaseName" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>ATM Database Name</label>
+              <helpText>Database name for ATM</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="MasterDatabaseName" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Master Database Name</label>
+              <helpText>Database name for Master</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+            <attr id="PhoenixDatabaseName" kind="text">
+              <properties required="yes" secure="no" verify="no" visible="yes" readonly="no" global="no" />
+              <behavior override="yes" copy="no" ignore="yes" />
+              <label>Phoenix Database Name</label>
+              <helpText>Database name for Phoenix</helpText>
+              <defaultValue encryptMethod="none" />
+              <constraints type="maxlength">
+                <maxlength>999</maxlength>
+              </constraints>
+              <dependencies>
+                <parentAttr id="" />
+              </dependencies>
+            </attr>
+          </object>
+        </objects>
+      </target>
+    </target_exposure>
+  </RDKAttributes>
+  <RDKApplication version="1" protocol_version="2.1">
+    <sync_id />
+    <connector_name>ADIB-Tradewind-Cnctr</connector_name>
+    <connector_version>1.0</connector_version>
+    <application_name>ADIB-Tradewind</application_name>
+  </RDKApplication>
+</CourRoot>

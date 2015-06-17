@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BrandingInformation version="1.0">
+  <Connector>DotNETCnctr.dll</Connector>
+  <VpvTriplet vendor="ADIB" product="Tradewind" version="Cnctr" />
+  <DefaultFilename allowModification="no">ADIBTradewindCnctr.dll</DefaultFilename>
+</BrandingInformation>

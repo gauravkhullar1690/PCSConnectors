@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BrandingInformation version="1.0">
+  <Connector>DotNETCnctr.dll</Connector>
+  <VpvTriplet vendor="ADIB" product="Ambit" version="Cnctr" />
+  <DefaultFilename allowModification="no">ADIBAmbitCnctr.dll</DefaultFilename>
+</BrandingInformation>
